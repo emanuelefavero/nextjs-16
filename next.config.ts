@@ -6,6 +6,16 @@ const nextConfig: NextConfig = {
   experimental: {
     mcpServer: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 export default nextConfig
