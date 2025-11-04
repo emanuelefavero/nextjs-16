@@ -39,9 +39,9 @@ export function ImageSlider() {
   return (
     <div className='relative mx-auto mt-4 w-full'>
       <div className='relative mx-12 h-[460px]'>
-        {/* Show skeleton while pending */}
         {isPending ? (
-          <ImageSkeleton />
+          // Image skeleton (grey bg) while loading
+          <div className='absolute inset-0 animate-pulse rounded-xl bg-neutral-500/20' />
         ) : (
           <CurrentImage
             src={images[currentIndex].src}
@@ -72,17 +72,6 @@ export function ImageSlider() {
             } transition-colors duration-500 ease-in-out`}
           />
         ))}
-      </div>
-    </div>
-  )
-}
-
-function ImageSkeleton() {
-  return (
-    <div className='flex h-full w-full items-center justify-center rounded-xl bg-neutral-100'>
-      <div className='flex flex-col items-center gap-2'>
-        <div className='h-8 w-8 animate-spin rounded-full border-2 border-fuchsia-500 border-t-transparent' />
-        <span className='text-sm text-neutral-500'>Loading image...</span>
       </div>
     </div>
   )
