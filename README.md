@@ -13,3 +13,15 @@ This repository is a playground for Next.js 16. Feel free to use it to test new 
 ## Resources
 
 - [Next.js 16 Documentation](https://nextjs.org/docs)
+
+## License
+
+- [MIT](LICENSE.md)
+
+&nbsp;
+
+---
+
+&nbsp;
+
+[**Go To Top &nbsp; ⬆️**](#nextjs-16)
