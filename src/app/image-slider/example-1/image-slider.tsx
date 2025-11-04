@@ -102,7 +102,7 @@ function CurrentImage({ src, alt }: CurrentImageProps) {
       fill
       sizes='(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 85vw'
       loading='eager'
-      className='rounded-xl object-cover transition-all duration-500 ease-in-out'
+      className='animate-fade-in rounded-xl object-cover transition-all duration-500 ease-in-out'
       onError={() => {
         console.error(`Image failed to load: ${src}`)
       }}
