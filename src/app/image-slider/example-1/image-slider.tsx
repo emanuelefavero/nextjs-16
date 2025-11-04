@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 
 type ImageData = {
   src: string
@@ -27,15 +27,27 @@ export function ImageSlider() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
   }
 
+  // Calculate adjacent indices for preloading
+  const prevIndex = (currentIndex - 1 + images.length) % images.length
+  const nextIndex = (currentIndex + 1) % images.length
+
   return (
     <div className='relative mx-auto mt-4 w-full'>
       <div className='relative mx-12 h-[460px]'>
-        <Image
+        {/* Current Image */}
+        <CurrentImage
           src={images[currentIndex].src}
-          alt={`Slider Image ${images[currentIndex].id}`}
-          fill
-          loading='eager'
-          className='rounded-xl object-cover transition-all duration-500 ease-in-out'
+          alt={`Image ${images[currentIndex].id}`}
+        />
+
+        {/* Preload adjacent images */}
+        <ImagePreloader
+          src={images[prevIndex].src}
+          alt={`Preload Image ${images[prevIndex].id}`}
+        />
+        <ImagePreloader
+          src={images[nextIndex].src}
+          alt={`Preload Image ${images[nextIndex].id}`}
         />
       </div>
 
@@ -59,6 +71,50 @@ export function ImageSlider() {
         ))}
       </div>
     </div>
+  )
+}
+
+type ImagePreloaderProps = {
+  src: string
+  alt: string
+}
+
+function ImageFallback() {
+  return (
+    <div className='flex h-full w-full items-center justify-center rounded-xl bg-neutral-100'>
+      <div className='h-8 w-8 animate-spin rounded-full border-2 border-fuchsia-500 border-t-transparent' />
+    </div>
+  )
+}
+
+type CurrentImageProps = {
+  src: string
+  alt: string
+}
+
+function CurrentImage({ src, alt }: CurrentImageProps) {
+  return (
+    <Suspense fallback={<ImageFallback />}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        loading='eager'
+        className='rounded-xl object-cover transition-all duration-500 ease-in-out'
+      />
+    </Suspense>
+  )
+}
+
+function ImagePreloader({ src, alt }: ImagePreloaderProps) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      loading='eager'
+      className='hidden rounded-xl object-cover'
+    />
   )
 }
 
