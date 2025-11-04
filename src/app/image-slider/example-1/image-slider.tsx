@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Suspense, useState } from 'react'
+import { useState, useTransition } from 'react'
 
 type ImageData = {
   src: string
@@ -16,15 +16,20 @@ const images: ImageData[] = Array.from({ length: 10 }, (_, i) => ({
 
 export function ImageSlider() {
   const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const [isPending, startTransition] = useTransition()
 
   const prev = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length,
-    )
+    startTransition(() => {
+      setCurrentIndex(
+        (prevIndex) => (prevIndex - 1 + images.length) % images.length,
+      )
+    })
   }
 
   const next = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+    startTransition(async () => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+    })
   }
 
   // Calculate adjacent indices for preloading
@@ -34,28 +39,26 @@ export function ImageSlider() {
   return (
     <div className='relative mx-auto mt-4 w-full'>
       <div className='relative mx-12 h-[460px]'>
-        {/* Current Image */}
-        <CurrentImage
-          src={images[currentIndex].src}
-          alt={`Image ${images[currentIndex].id}`}
-        />
-
-        {/* Preload adjacent images */}
-        <ImagePreloader
-          src={images[prevIndex].src}
-          alt={`Preload Image ${images[prevIndex].id}`}
-        />
-        <ImagePreloader
-          src={images[nextIndex].src}
-          alt={`Preload Image ${images[nextIndex].id}`}
-        />
+        {/* Show skeleton while pending */}
+        {isPending ? (
+          <ImageSkeleton />
+        ) : (
+          <CurrentImage
+            src={images[currentIndex].src}
+            alt={`Image ${images[currentIndex].id}`}
+          />
+        )}
       </div>
 
+      {/* Preload adjacent images */}
+      <ImagePreloader src={images[prevIndex].src} />
+      <ImagePreloader src={images[nextIndex].src} />
+
       {/* Navigation buttons */}
-      <Button className='left-0' onClick={prev}>
+      <Button className='left-0' onClick={prev} disabled={isPending}>
         ‹
       </Button>
-      <Button className='right-0' onClick={next}>
+      <Button className='right-0' onClick={next} disabled={isPending}>
         ›
       </Button>
 
@@ -74,15 +77,13 @@ export function ImageSlider() {
   )
 }
 
-type ImagePreloaderProps = {
-  src: string
-  alt: string
-}
-
-function ImageFallback() {
+function ImageSkeleton() {
   return (
     <div className='flex h-full w-full items-center justify-center rounded-xl bg-neutral-100'>
-      <div className='h-8 w-8 animate-spin rounded-full border-2 border-fuchsia-500 border-t-transparent' />
+      <div className='flex flex-col items-center gap-2'>
+        <div className='h-8 w-8 animate-spin rounded-full border-2 border-fuchsia-500 border-t-transparent' />
+        <span className='text-sm text-neutral-500'>Loading image...</span>
+      </div>
     </div>
   )
 }
@@ -94,24 +95,32 @@ type CurrentImageProps = {
 
 function CurrentImage({ src, alt }: CurrentImageProps) {
   return (
-    <Suspense fallback={<ImageFallback />}>
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        loading='eager'
-        className='rounded-xl object-cover transition-all duration-500 ease-in-out'
-      />
-    </Suspense>
-  )
-}
-
-function ImagePreloader({ src, alt }: ImagePreloaderProps) {
-  return (
     <Image
       src={src}
       alt={alt}
+      priority
       fill
+      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 85vw'
+      loading='eager'
+      className='rounded-xl object-cover transition-all duration-500 ease-in-out'
+      onError={() => {
+        console.error(`Image failed to load: ${src}`)
+      }}
+    />
+  )
+}
+
+type ImagePreloaderProps = {
+  src: string
+}
+
+function ImagePreloader({ src }: ImagePreloaderProps) {
+  return (
+    <Image
+      src={src}
+      alt='preload'
+      fill
+      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 85vw'
       loading='eager'
       className='hidden rounded-xl object-cover'
     />
