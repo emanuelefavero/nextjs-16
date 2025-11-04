@@ -48,16 +48,14 @@ export function ImageSlider() {
       </Button>
 
       {/* Navigation Info */}
-      <div className='mt-4 flex justify-center'>
+      <div className='mt-4 flex justify-center gap-2'>
         {images.map((_, index) => (
           <div
             key={index}
-            className={`mx-1 h-1 w-10 ${
-              index === currentIndex
-                ? 'rounded-xl bg-fuchsia-500'
-                : 'rounded-xl bg-neutral-500/50'
-            } transition-all duration-500 ease-in-out`}
-          ></div>
+            className={`h-1 w-10 rounded-xl ${
+              index === currentIndex ? 'bg-fuchsia-500' : 'bg-neutral-500/50'
+            } transition-colors duration-500 ease-in-out`}
+          />
         ))}
       </div>
     </div>
