@@ -15,6 +15,9 @@ export default async function Home() {
         <li>
           <Link href='/use-cache'>use cache</Link>
         </li>
+        <li>
+          <Link href='/fetching'>Fetching</Link>
+        </li>
       </ul>
     </>
   )
