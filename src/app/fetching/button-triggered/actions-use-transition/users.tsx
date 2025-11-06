@@ -17,11 +17,7 @@ export function Users() {
 
   return (
     <div>
-      <button onClick={handleClick}>
-        {pending ? 'Loading...' : 'Fetch Users'}
-      </button>
-
-      {users && (
+      {users ? (
         <ul>
           {users.map((user) => (
             <li key={user.id}>
@@ -29,6 +25,10 @@ export function Users() {
             </li>
           ))}
         </ul>
+      ) : (
+        <button onClick={handleClick}>
+          {pending ? 'Loading...' : 'Fetch Users'}
+        </button>
       )}
     </div>
   )
