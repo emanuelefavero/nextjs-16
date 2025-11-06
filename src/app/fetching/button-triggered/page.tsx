@@ -10,6 +10,11 @@ export default function Page() {
             Fetching with Actions and useTransition
           </Link>
         </li>
+        <li>
+          <Link href='/fetching/button-triggered/client-only'>
+            Fetching with Client Components Only
+          </Link>
+        </li>
       </ul>
     </>
   )
