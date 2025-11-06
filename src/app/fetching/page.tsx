@@ -12,6 +12,11 @@ export default function Page() {
         <li>
           <Link href='/fetching/rcc'>RCC Fetching</Link>
         </li>
+        <li>
+          <Link href='/fetching/button-triggered'>
+            Button Triggered Fetching
+          </Link>
+        </li>
       </ul>
     </>
   )
