@@ -24,6 +24,9 @@ export default async function Home() {
         <li>
           <Link href='/fetching'>Fetching</Link>
         </li>
+        <li>
+          <Link href='/cookies'>Cookies</Link>
+        </li>
       </ul>
     </>
   )
