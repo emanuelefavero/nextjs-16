@@ -10,6 +10,9 @@ export default async function Home() {
           <Link href='/test'>Test Page</Link>
         </li>
         <li>
+          <Link href='/mdx-blog'>MDX Blog</Link>
+        </li>
+        <li>
           <Link href='/mdx-page'>MDX Page</Link>
         </li>
         <li>
