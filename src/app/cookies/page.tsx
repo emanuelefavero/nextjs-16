@@ -5,7 +5,7 @@ export default async function Page() {
     <>
       <h1>Cookies</h1>
 
-      <LinkWithViews href='/cookies/sub-page'>
+      <LinkWithViews href='/cookies/sub-page' className='mt-2'>
         Go to Cookies Sub Page
       </LinkWithViews>
     </>
