@@ -16,7 +16,7 @@ export async function Products() {
 
   return (
     <>
-      <h2 className='mb-4 text-2xl font-bold'>Products</h2>
+      <h2 className='mb-4'>Products</h2>
 
       <ProductsTable products={products} />
     </>
