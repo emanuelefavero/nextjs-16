@@ -1,6 +1,6 @@
 import { pool } from '@/lib/db'
 import type { Product } from '@/types/products'
-import { ProductsList } from './products-list'
+import { ProductsTable } from './products-table'
 
 async function getProducts(): Promise<Product[]> {
   const client = await pool.connect()
@@ -27,7 +27,7 @@ export async function Products() {
     <>
       <h2 className='mb-4 text-2xl font-bold'>Products</h2>
 
-      <ProductsList products={products} />
+      <ProductsTable products={products} />
     </>
   )
 }
