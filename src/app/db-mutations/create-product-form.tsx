@@ -1,20 +1,26 @@
 import { SubmitButton } from '@/components/shared/submit-button'
+import { useId } from 'react'
 import { createProductAction } from './actions'
 
 export function CreateProductForm() {
+  const id = useId()
+  const nameId = `${id}-name`
+  const quantityId = `${id}-quantity`
+  const categoryId = `${id}-category`
+
   return (
     <form action={createProductAction}>
       <div>
-        <label htmlFor='name'>Name:</label>
-        <input type='text' id='name' name='name' required />
+        <label htmlFor={nameId}>Name:</label>
+        <input type='text' id={nameId} name='name' required />
       </div>
       <div>
-        <label htmlFor='quantity'>Quantity:</label>
-        <input type='number' id='quantity' name='quantity' required />
+        <label htmlFor={quantityId}>Quantity:</label>
+        <input type='number' id={quantityId} name='quantity' required />
       </div>
       <div>
-        <label htmlFor='category'>Category:</label>
-        <input type='text' id='category' name='category' />
+        <label htmlFor={categoryId}>Category:</label>
+        <input type='text' id={categoryId} name='category' />
       </div>
       <SubmitButton>Add Product</SubmitButton>
     </form>
