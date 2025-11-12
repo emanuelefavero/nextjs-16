@@ -5,8 +5,8 @@ import { ProductsTable } from './products-table'
 
 export async function Products() {
   'use cache'
-  cacheTag('products')
-  cacheLife('hours')
+  cacheTag('products') // * Tag this data for revalidation
+  cacheLife('hours') // * Cache lifetime
 
   const products = await getProducts()
 
