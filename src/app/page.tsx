@@ -16,6 +16,9 @@ export default async function Home() {
           <Link href='/mdx-page'>MDX Page</Link>
         </li>
         <li>
+          <Link href='/db-mutations'>DB Mutations</Link>
+        </li>
+        <li>
           <Link href='/image-slider'>Image Slider</Link>
         </li>
         <li>
