@@ -1,6 +1,7 @@
 import type { Product } from '@/types/products'
+import { DeleteProductButton } from './delete-product-button'
 
-const COLUMNS = ['Product', 'Quantity', 'Category']
+const COLUMNS = ['Product', 'Quantity', 'Category', 'Actions']
 
 type Props = {
   products: Product[]
@@ -10,7 +11,7 @@ export function ProductsTable({ products }: Props) {
   return (
     <div className='relative max-w-prose overflow-x-auto rounded-lg shadow-sm'>
       <table className='w-full text-left text-sm text-neutral-600 rtl:text-right dark:text-neutral-400'>
-        <thead className='border-b border-neutral-500/20 bg-primary/20 text-foreground text-xs uppercase'>
+        <thead className='border-b border-neutral-500/20 bg-primary/20 text-xs text-foreground uppercase'>
           <tr>
             {COLUMNS.map((column) => (
               <th key={column} scope='col' className='px-6 py-3'>
@@ -30,6 +31,9 @@ export function ProductsTable({ products }: Props) {
               </td>
               <td className='px-6 py-4'>{product.quantity}</td>
               <td className='px-6 py-4'>{product.category || 'N/A'}</td>
+              <td className='px-6 py-4'>
+                <DeleteProductButton productId={product.id} />
+              </td>
             </tr>
           ))}
         </tbody>
