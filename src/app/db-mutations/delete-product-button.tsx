@@ -26,7 +26,7 @@ export function DeleteProductButton({ productId }: Props) {
       aria-label='Delete product'
       title='Delete product'
       disabled={pending}
-      className='border border-error-foreground/20 bg-error px-4 py-[.4rem]'
+      className='border border-error-foreground/20 bg-error px-4 py-[.4rem] disabled:opacity-75'
     >
       {pending ? (
         <SpinnerIcon className='border-error-foreground/80' />

@@ -1,4 +1,4 @@
-import { cx } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 type StrokeClass = `stroke-${string}`
 
@@ -19,7 +19,7 @@ export function TrashIcon({
       viewBox='0 0 24 24'
       strokeWidth={2}
       stroke='currentColor'
-      className={cx('h-4 w-4 fill-transparent', strokeClass, className)}
+      className={cn('h-4 w-4 fill-transparent', strokeClass, className)}
       {...props}
     >
       <path

@@ -1,6 +1,6 @@
 'use client'
 
-import { cx } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { useFormStatus } from 'react-dom'
 import { SpinnerIcon } from '../icons/SpinnerIcon'
 
@@ -13,7 +13,7 @@ export function SubmitButton({ children, className, ...props }: Props) {
     <button
       disabled={pending}
       type='submit'
-      className={cx('px-4 py-[.4rem]', className)}
+      className={cn('px-4 py-[.4rem]', className)}
       {...props}
     >
       {pending ? <SpinnerIcon /> : children}
