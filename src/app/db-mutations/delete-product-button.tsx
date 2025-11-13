@@ -1,9 +1,10 @@
 'use client'
 
+import { SpinnerIcon } from '@/components/icons/SpinnerIcon'
+import { TrashIcon } from '@/components/icons/TrashIcon'
 import { useTransition } from 'react'
 import { deleteProductAction } from './actions'
 
-// TODO add spinner
 // TODO color button red
 
 type Props = {
@@ -25,8 +26,9 @@ export function DeleteProductButton({ productId }: Props) {
       aria-label='Delete product'
       title='Delete product'
       disabled={pending}
+      className='px-4 py-[.4rem]'
     >
-      X
+      {pending ? <SpinnerIcon /> : <TrashIcon />}
     </button>
   )
 }
