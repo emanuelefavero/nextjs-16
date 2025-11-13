@@ -26,9 +26,13 @@ export function DeleteProductButton({ productId }: Props) {
       aria-label='Delete product'
       title='Delete product'
       disabled={pending}
-      className='px-4 py-[.4rem]'
+      className='border border-error-foreground/20 bg-error px-4 py-[.4rem]'
     >
-      {pending ? <SpinnerIcon /> : <TrashIcon />}
+      {pending ? (
+        <SpinnerIcon className='border-error-foreground/80' />
+      ) : (
+        <TrashIcon strokeClass='stroke-error-foreground' />
+      )}
     </button>
   )
 }
