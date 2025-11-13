@@ -5,8 +5,6 @@ import { TrashIcon } from '@/components/icons/TrashIcon'
 import { useTransition } from 'react'
 import { deleteProductAction } from './actions'
 
-// TODO color button red
-
 type Props = {
   productId: string
 }
