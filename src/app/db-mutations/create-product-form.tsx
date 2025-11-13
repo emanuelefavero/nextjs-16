@@ -54,7 +54,9 @@ export function CreateProductForm() {
             className='w-full sm:w-auto'
           />
         </div>
-        <SubmitButton className='w-full sm:w-fit'>Add Product</SubmitButton>
+        <SubmitButton className='flex w-full min-w-[62px] items-center justify-center sm:w-fit'>
+          Add
+        </SubmitButton>
       </form>
     </div>
   )
