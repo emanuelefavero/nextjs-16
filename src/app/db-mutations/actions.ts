@@ -9,6 +9,7 @@ import { updateTag } from 'next/cache'
 export type ActionResult<T> = { data: T } | { error: string }
 
 // * Server Action to create a new product
+// BEWARE: This action does not return any result, if you want to show feedback to the user, this must action must be called in client components instead of server component forms @see ./create-product-form.tsx
 export async function createProductAction(formData: FormData) {
   const rawFormData = {
     name: formData.get('name') as string,
