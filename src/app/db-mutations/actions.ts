@@ -1,7 +1,10 @@
 'use server'
 
 import { createProduct, deleteProduct } from '@/lib/db/mutations'
+import type { Product } from '@/types/products'
 import { updateTag } from 'next/cache'
+
+export type ActionResult<T> = { data: T } | { error: string }
 
 // * Server Action to create a new product
 export async function createProductAction(formData: FormData) {
@@ -16,7 +19,21 @@ export async function createProductAction(formData: FormData) {
 }
 
 // * Server Action to delete a product
-export async function deleteProductAction(productId: string) {
-  await deleteProduct(productId)
-  updateTag('products')
+export async function deleteProductAction(
+  productId: string,
+): Promise<ActionResult<Product>> {
+  // TODO Validation
+  console.log(productId)
+
+  return { error: 'Not implemented' }
+
+  // try {
+  //   const deletedProduct = await deleteProduct(productId)
+  //   if (!deletedProduct) return { error: 'Product not found' }
+  //   updateTag('products')
+  //   return { data: deletedProduct }
+  // } catch (error) {
+  //   console.error('Error deleting product:', error)
+  //   return { error: 'Failed to delete product' }
+  // }
 }
