@@ -65,7 +65,8 @@
     }
   }
 
-  --animate-slide-in-from-right: slideInFromRight 0.3s ease-in forwards;
+  --animate-slide-in-from-right: slideInFromRight 0.3s
+    cubic-bezier(0.881, 0.003, 0.119, 0.997) forwards;
 
   @keyframes slideInFromRight {
     from {
