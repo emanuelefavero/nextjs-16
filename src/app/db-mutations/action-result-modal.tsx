@@ -22,10 +22,21 @@ export function ActionResultModal() {
     <div className='fixed right-4 bottom-4 z-50 scale-75 animate-slide-in-from-right sm:scale-100'>
       <div className='flex items-center justify-between gap-4 rounded-lg border border-foreground/20 bg-background p-4 shadow-lg'>
         {'error' in result && (
-          <p className='text-error-foreground'>Error: {result.error}</p>
+          <p>
+            <span className='text-error-foreground'>Error:&nbsp;</span>
+            {result.error}
+          </p>
         )}
         {'data' in result && (
-          <p className='text-success-foreground'>Deleted: {result.data.name}</p>
+          <p>
+            <span className='hidden text-success-foreground sm:inline-block'>
+              Successfully deleted:&nbsp;
+            </span>
+            <span className='inline-block text-success-foreground sm:hidden'>
+              Deleted:&nbsp;
+            </span>
+            {result.data.name}
+          </p>
         )}
         <button
           onClick={reset}
