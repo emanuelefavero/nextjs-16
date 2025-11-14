@@ -25,7 +25,12 @@ export async function deleteProductAction(
   // TODO Validation
   console.log(productId)
 
-  return { error: 'Not implemented' }
+  const random = Math.random()
+  if (random > 0.5) {
+    return { data: { id: productId, name: 'Sample Product', quantity: 1 } }
+  } else {
+    return { error: 'Failed to delete product' }
+  }
 
   // try {
   //   const deletedProduct = await deleteProduct(productId)

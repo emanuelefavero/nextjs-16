@@ -1,9 +1,20 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useActionResultStore } from './store/actionResultStore'
 
 export function ActionResultModal() {
   const { result, show, reset } = useActionResultStore()
+
+  useEffect(() => {
+    if (show && result) {
+      const timer = setTimeout(() => {
+        reset()
+      }, 3000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [show, result, reset])
 
   if (!show || !result) return null
 
