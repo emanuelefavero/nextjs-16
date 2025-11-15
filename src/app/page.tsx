@@ -19,6 +19,9 @@ export default async function Home() {
           <Link href='/db-mutations'>DB Mutations</Link>
         </li>
         <li>
+          <Link href='/animations'>Animations</Link>
+        </li>
+        <li>
           <Link href='/image-slider'>Image Slider</Link>
         </li>
         <li>
