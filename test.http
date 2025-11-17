@@ -2,3 +2,13 @@
 
 ### Get all products
 GET {{baseUrl}}/api/products
+
+### Create a new product
+POST {{baseUrl}}/api/products
+Content-Type: application/json
+
+{
+  "name": "New Product",
+  "quantity": 5,
+  "category": "Electronics"
+}
