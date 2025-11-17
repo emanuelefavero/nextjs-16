@@ -1,13 +1,8 @@
-import { cacheLife, cacheTag } from 'next/cache'
-
 import { getProducts } from '@/lib/db/queries'
 import { ProductsTable } from './products-table'
 
 export async function Products() {
-  'use cache'
-  cacheTag('products') // * Tag this data for revalidation
-  cacheLife('hours') // * Cache lifetime
-
+  // TIP: The `getProducts` function is cached: @see @/lib/db/queries.ts
   const products = await getProducts()
 
   if (!products.length) {
