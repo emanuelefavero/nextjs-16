@@ -24,9 +24,9 @@ export async function POST(request: Request) {
       )
     }
 
-    revalidateTag('products', 'max') // * Revalidate cache
+    revalidateTag('products', { expire: 0 }) // * Revalidate cache
     // TIP: We cannot use `updateTag` in route handlers, we must use `revalidateTag`.
-    // TIP: `max` option sets the tag to stale, forcing revalidation on next request. Alternatively, we can use {expire: 0} to immediately expire the tag.
+    // TIP: {expire: 0} option immediately expires the tag. Alternatively, we can use `max` to set the tag to stale and force revalidation on next request.
 
     return Response.json({ data: createdProduct }, { status: 201 })
   } catch (error) {
