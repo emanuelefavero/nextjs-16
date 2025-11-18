@@ -1,4 +1,3 @@
-import { baseUrl } from '@/config/baseUrl'
 import type { ProductId } from '@/types/products'
 import { expect, test } from '@playwright/test'
 
@@ -9,7 +8,7 @@ test.describe('/api/products API', () => {
     const uniqueName = `Test Product ${Date.now()}`
 
     // Create product
-    const createResponse = await request.post(`${baseUrl}/api/products`, {
+    const createResponse = await request.post('/api/products', {
       data: {
         name: uniqueName,
         quantity: 1,
@@ -28,7 +27,7 @@ test.describe('/api/products API', () => {
     const productId: ProductId = createBody.data.id
 
     // Get all products and verify the created one is included
-    const getResponse = await request.get(`${baseUrl}/api/products`)
+    const getResponse = await request.get('/api/products')
 
     expect(getResponse.ok()).toBeTruthy()
     expect(getResponse.status()).toBe(200)
@@ -45,9 +44,7 @@ test.describe('/api/products API', () => {
     )
 
     // Delete the product
-    const deleteResponse = await request.delete(
-      `${baseUrl}/api/products?id=${productId}`,
-    )
+    const deleteResponse = await request.delete(`/api/products?id=${productId}`)
 
     expect(deleteResponse.ok()).toBeTruthy()
     expect(deleteResponse.status()).toBe(200)
@@ -57,7 +54,7 @@ test.describe('/api/products API', () => {
     expect(deleteBody.data.id).toBe(productId)
 
     // Verify the product is deleted
-    const finalGetResponse = await request.get(`${baseUrl}/api/products`)
+    const finalGetResponse = await request.get('/api/products')
 
     expect(finalGetResponse.ok()).toBeTruthy()
 
