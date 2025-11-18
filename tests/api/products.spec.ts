@@ -1,3 +1,4 @@
+import type { ProductId } from '@/types/products'
 import { expect, test } from '@playwright/test'
 
 test.describe('/api/products API', () => {
@@ -26,7 +27,7 @@ test.describe('/api/products API', () => {
     expect(createBody.data.id).toBeDefined()
     expect(createBody.data.name).toBe(uniqueName)
 
-    const productId = createBody.data.id
+    const productId: ProductId = createBody.data.id
 
     // Get all products and verify the created one is included
     const getResponse = await request.get('http://localhost:3000/api/products')
