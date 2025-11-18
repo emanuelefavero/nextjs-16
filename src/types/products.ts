@@ -6,5 +6,5 @@ export type Product = {
 }
 
 export type NewProduct = Omit<Product, 'id'>
-
+export type ProductId = Product['id']
 export type Products = Product[]

@@ -1,6 +1,6 @@
 import { createProduct, deleteProduct } from '@/lib/db/mutations'
 import { getProducts } from '@/lib/db/queries'
-import type { NewProduct } from '@/types/products'
+import type { NewProduct, ProductId } from '@/types/products'
 import { revalidateTag } from 'next/cache'
 
 export async function GET() {
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const productId = searchParams.get('id') as string
+    const productId: ProductId | null = searchParams.get('id')
 
     if (!productId) {
       return Response.json({ error: 'Product ID is required' }, { status: 400 })

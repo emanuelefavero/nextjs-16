@@ -1,4 +1,4 @@
-import type { NewProduct, Product } from '@/types/products'
+import type { NewProduct, Product, ProductId } from '@/types/products'
 import { createId } from '@paralleldrive/cuid2'
 import { pool } from './db'
 
@@ -27,7 +27,7 @@ export async function createProduct(data: NewProduct): Promise<Product | null> {
 
 // * Delete a product by its ID (Return the deleted product or null if not found)
 export async function deleteProduct(
-  productId: string,
+  productId: ProductId,
 ): Promise<Product | null> {
   const client = await pool.connect()
 

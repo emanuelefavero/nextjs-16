@@ -1,7 +1,7 @@
 'use server'
 
 import { createProduct, deleteProduct } from '@/lib/db/mutations'
-import type { Product } from '@/types/products'
+import type { Product, ProductId } from '@/types/products'
 import { updateTag } from 'next/cache'
 
 // TODO Validation
@@ -23,7 +23,7 @@ export async function createProductAction(formData: FormData) {
 
 // * Server Action to delete a product
 export async function deleteProductAction(
-  productId: string,
+  productId: ProductId,
 ): Promise<ActionResult<Product>> {
   try {
     const deletedProduct = await deleteProduct(productId)
