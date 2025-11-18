@@ -1,6 +1,6 @@
 import { createProduct, deleteProduct } from '@/lib/db/mutations'
 import { getProducts } from '@/lib/db/queries'
-import type { NewProduct, Product } from '@/types/products'
+import type { NewProduct } from '@/types/products'
 import { revalidateTag } from 'next/cache'
 
 export async function GET() {
