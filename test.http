@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000/
+@baseUrl = http://localhost:3000
 
 # NOTE: Replace with an actual product ID from your database
 @productId = ReplaceWithActualProductID
