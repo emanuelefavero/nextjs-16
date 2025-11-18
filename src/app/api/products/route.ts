@@ -1,4 +1,4 @@
-import { createProduct } from '@/lib/db/mutations'
+import { createProduct, deleteProduct } from '@/lib/db/mutations'
 import { getProducts } from '@/lib/db/queries'
 import type { NewProduct, Product } from '@/types/products'
 import { revalidateTag } from 'next/cache'
@@ -32,5 +32,31 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error creating product:', error)
     return Response.json({ error: 'Error creating product' }, { status: 500 })
+  }
+}
+
+// Delete a product by ID
+// ? Example: DELETE /api/products?id=PRODUCT_ID
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const productId = searchParams.get('id') as string
+
+    if (!productId) {
+      return Response.json({ error: 'Product ID is required' }, { status: 400 })
+    }
+
+    const deletedProduct = await deleteProduct(productId)
+
+    if (!deletedProduct) {
+      return Response.json({ error: 'Product not found' }, { status: 404 })
+    }
+
+    revalidateTag('products', { expire: 0 }) // * Revalidate cache immediately
+
+    return Response.json({ data: deletedProduct }, { status: 200 })
+  } catch (error) {
+    console.error('Error deleting product:', error)
+    return Response.json({ error: 'Error deleting product' }, { status: 500 })
   }
 }

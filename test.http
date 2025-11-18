@@ -1,5 +1,8 @@
 @baseUrl = http://localhost:3000/
 
+# NOTE: Replace with an actual product ID from your database
+@productId = ReplaceWithActualProductID
+
 ### Get all products
 GET {{baseUrl}}/api/products
 
@@ -12,3 +15,6 @@ Content-Type: application/json
   "quantity": 5,
   "category": "Electronics"
 }
+
+### Delete a product by ID
+DELETE {{baseUrl}}/api/products?id={{productId}}
