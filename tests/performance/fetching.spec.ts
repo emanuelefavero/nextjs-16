@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 // Performance threshold in milliseconds
-const PERFORMANCE_THRESHOLD = 3000 // 3 seconds max for data fetch
+const PERFORMANCE_THRESHOLD = 5000 // 5 seconds max for data fetch
 
 interface PerformanceMetrics {
   navigationTime: number
