@@ -1,20 +1,15 @@
 const BASE_URL = process.env.BASE_URL
-const isProd = process.env.NODE_ENV === 'production'
-const isTest = process.env.NODE_ENV === 'test'
 
-/**
- * Environment configuration
- *
- * @example
- * import { env } from 'src/config/env'
- * console.log(env.baseUrl)
- */
+export const isProd = process.env.NODE_ENV === 'production'
+export const isDev = process.env.NODE_ENV !== 'production'
+export const isTest = process.env.NODE_ENV === 'test'
+export const baseUrl =
+  BASE_URL || (isProd ? 'https://your-prod-url.com' : 'http://localhost:3000')
 
+// ? Also exporting a single env object for grouped access
 export const env = {
-  isProd: isProd,
-  isDev: !isProd,
-  isTest: isTest,
-  baseUrl:
-    BASE_URL ||
-    (isProd ? 'https://your-prod-url.com' : 'http://localhost:3000'),
+  isProd,
+  isDev,
+  isTest,
+  baseUrl,
 } as const
