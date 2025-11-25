@@ -60,3 +60,5 @@ export async function DELETE(request: Request) {
     return Response.json({ error: 'Error deleting product' }, { status: 500 })
   }
 }
+
+// NOTE: The PUT method for updating product quantity is handled in a separate route file: /api/products/quantity/route.ts
