@@ -18,3 +18,12 @@ Content-Type: application/json
 
 ### Delete a product by ID
 DELETE {{baseUrl}}/api/products?id={{productId}}
+
+### Update product quantity
+PATCH {{baseUrl}/api/products/quantity}
+Content-Type: application/json
+
+{
+  "id": "{{productId}}",
+  "quantity": 10,
+}
