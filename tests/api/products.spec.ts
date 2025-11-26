@@ -1,10 +1,14 @@
-import type { ProductId } from '@/types/products'
+import type { ProductId, ProductQuantity } from '@/types/products'
 import { expect, test } from '@playwright/test'
 
 test.describe('/api/products API', () => {
   test('Full CRUD cycle: create, read, delete, and verify deletion', async ({
     request,
+    browserName,
   }) => {
+    // Only run this test in Chromium
+    test.skip(browserName !== 'chromium', 'This test runs only in Chromium')
+
     const uniqueName = `Test Product ${Date.now()}`
 
     // Create product
