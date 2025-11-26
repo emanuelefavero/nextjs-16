@@ -1,5 +1,6 @@
 'use client'
 
+import { MinusIcon } from '@/components/icons/MinusIcon'
 import { PlusIcon } from '@/components/icons/PlusIcon'
 import { cn } from '@/lib/utils'
 import type { Product } from '@/types/products'
@@ -33,7 +34,9 @@ type Props = {
 export function ProductQuantity({ product }: Props) {
   return (
     <div className='flex items-center gap-2'>
-      <QuantityButton>-</QuantityButton>
+      <QuantityButton>
+        <MinusIcon strokeClass='stroke-danger-foreground' />
+      </QuantityButton>
       <div className='min-w-[3ch] text-center'>{product.quantity}</div>
       <QuantityButton>
         <PlusIcon strokeClass='stroke-danger-foreground' />
