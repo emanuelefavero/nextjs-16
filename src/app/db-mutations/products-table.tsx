@@ -1,5 +1,4 @@
 import type { Product } from '@/types/products'
-import { DeleteProductButton } from './delete-product-button'
 import { ProductRow } from './product-row'
 
 const COLUMNS = ['Product', 'Quantity', 'Category', 'Actions']
