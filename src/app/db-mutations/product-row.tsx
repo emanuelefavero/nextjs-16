@@ -1,5 +1,6 @@
 import type { Product } from '@/types/products'
 import { DeleteProductButton } from './delete-product-button'
+import { ProductQuantity } from './product-quantity'
 
 type Props = {
   product: Product
@@ -11,7 +12,9 @@ export function ProductRow({ product }: Props) {
       <td className='px-6 py-4 font-medium whitespace-nowrap text-neutral-900 dark:text-white'>
         {product.name}
       </td>
-      <td className='px-6 py-4'>{product.quantity}</td>
+      <td className='px-6 py-4'>
+        <ProductQuantity product={product} />
+      </td>
       <td className='px-6 py-4'>{product.category || 'N/A'}</td>
       <td className='px-6 py-4'>
         <DeleteProductButton productId={product.id} />
