@@ -3,6 +3,7 @@ import type {
   Product,
   ProductId,
   ProductQuantity,
+  ProductQuantityOperation,
 } from '@/types/products'
 import { createId } from '@paralleldrive/cuid2'
 import { pool } from './db'
@@ -90,6 +91,37 @@ export async function updateProductQuantity(
   } catch (error) {
     await client.query('ROLLBACK') // Rollback on error
     console.error(error)
+  } finally {
+    client.release()
+  }
+
+  return null
+}
+
+// * Increment/Decrement a product quantity by its ID (Return the updated product or null if not found)
+export async function adjustProductQuantity(
+  productId: ProductId,
+  operation: ProductQuantityOperation,
+): Promise<Product | null> {
+  // Increment or decrement by 1 based on action
+  const delta = operation === 'increment' ? 1 : -1
+
+  const client = await pool.connect()
+
+  try {
+    // Update product quantity (use previous quantity plus delta, prevent negative quantities) and return updated product
+    const query = `
+      UPDATE "Product"
+      SET quantity = GREATEST(quantity + $1, 0)
+      WHERE id = $2
+      RETURNING *
+    `
+    const values = [delta, productId]
+    const { rows } = await client.query(query, values)
+
+    return (rows[0] as Product) || null
+  } catch (error) {
+    console.error('Error adjusting product quantity:', error)
   } finally {
     client.release()
   }
