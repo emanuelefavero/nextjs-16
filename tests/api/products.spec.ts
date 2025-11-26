@@ -1,4 +1,4 @@
-import type { ProductId, ProductQuantity } from '@/types/products'
+import type { ProductId } from '@/types/products'
 import { expect, test } from '@playwright/test'
 
 test.describe('/api/products API', () => {
