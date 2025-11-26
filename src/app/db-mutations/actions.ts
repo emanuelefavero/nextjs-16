@@ -1,7 +1,15 @@
 'use server'
 
-import { createProduct, deleteProduct } from '@/lib/db/mutations'
-import type { Product, ProductId } from '@/types/products'
+import {
+  adjustProductQuantity,
+  createProduct,
+  deleteProduct,
+} from '@/lib/db/mutations'
+import type {
+  Product,
+  ProductId,
+  ProductQuantityOperation,
+} from '@/types/products'
 import { updateTag } from 'next/cache'
 
 // TODO Validation
@@ -33,5 +41,21 @@ export async function deleteProductAction(
   } catch (error) {
     console.error('Error deleting product:', error)
     return { error: 'Failed to delete product' }
+  }
+}
+
+// * Server Action to adjust product quantity
+export async function adjustProductQuantityAction(
+  productId: ProductId,
+  operation: ProductQuantityOperation,
+): Promise<ActionResult<Product>> {
+  try {
+    const updatedProduct = await adjustProductQuantity(productId, operation)
+    if (!updatedProduct) return { error: 'Product not found' }
+    updateTag('products')
+    return { data: updatedProduct }
+  } catch (error) {
+    console.error('Error adjusting product:', error)
+    return { error: 'Failed to adjust product quantity' }
   }
 }
