@@ -2,6 +2,7 @@
 
 import { MinusIcon } from '@/components/icons/MinusIcon'
 import { PlusIcon } from '@/components/icons/PlusIcon'
+import { SpinnerIcon } from '@/components/icons/SpinnerIcon'
 import { cn } from '@/lib/utils'
 import type { Product, ProductQuantityOperation } from '@/types/products'
 import { useOptimistic, useTransition } from 'react'
@@ -59,14 +60,22 @@ export function ProductQuantity({ product }: Props) {
         onClick={() => handleAdjustQuantity('decrement')}
         disabled={pending}
       >
-        <MinusIcon strokeClass='stroke-danger-foreground' />
+        {pending ? (
+          <SpinnerIcon />
+        ) : (
+          <MinusIcon strokeClass='stroke-danger-foreground' />
+        )}
       </QuantityButton>
       <div className='min-w-[3ch] text-center'>{optimisticQuantity}</div>
       <QuantityButton
         onClick={() => handleAdjustQuantity('increment')}
         disabled={pending}
       >
-        <PlusIcon strokeClass='stroke-danger-foreground' />
+        {pending ? (
+          <SpinnerIcon />
+        ) : (
+          <PlusIcon strokeClass='stroke-danger-foreground' />
+        )}
       </QuantityButton>
     </div>
   )
