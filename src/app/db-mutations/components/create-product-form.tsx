@@ -1,6 +1,6 @@
+import { createProductAction } from '@/app/db-mutations/actions'
 import { SubmitButton } from '@/components/shared/submit-button'
 import { useId } from 'react'
-import { createProductAction } from './actions'
 
 export function CreateProductForm() {
   const id = useId()

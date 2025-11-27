@@ -1,11 +1,11 @@
 'use client'
 
+import { deleteProductAction } from '@/app/db-mutations/actions'
+import { useActionResultStore } from '@/app/db-mutations/store/actionResultStore'
 import { SpinnerIcon } from '@/components/icons/SpinnerIcon'
 import { TrashIcon } from '@/components/icons/TrashIcon'
 import type { ProductId } from '@/types/products'
 import { useTransition } from 'react'
-import { deleteProductAction } from './actions'
-import { useActionResultStore } from './store/actionResultStore'
 
 type Props = {
   productId: ProductId

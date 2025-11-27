@@ -1,11 +1,11 @@
 'use client'
 
+import { adjustProductQuantityAction } from '@/app/db-mutations/actions'
 import { MinusIcon } from '@/components/icons/MinusIcon'
 import { PlusIcon } from '@/components/icons/PlusIcon'
 import { SpinnerIcon } from '@/components/icons/SpinnerIcon'
 import type { Product, ProductQuantityOperation } from '@/types/products'
 import { useOptimistic, useTransition } from 'react'
-import { adjustProductQuantityAction } from './actions'
 import { ProductQuantityButton } from './product-quantity-button'
 
 // TODO Enable and test revert on error inside handleAdjustQuantity

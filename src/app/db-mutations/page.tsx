@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
-import { ActionResultModal } from './action-result-modal'
-import { CreateProductForm } from './create-product-form'
-import { Products } from './products'
+import { ActionResultModal } from './components/action-result-modal'
+import { CreateProductForm } from './components/create-product-form'
+import { Products } from './components/products'
 
 export default function Page() {
   return (

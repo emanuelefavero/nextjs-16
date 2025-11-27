@@ -1,7 +1,7 @@
 'use client'
 
+import { useActionResultStore } from '@/app/db-mutations/store/actionResultStore'
 import { useEffect } from 'react'
-import { useActionResultStore } from './store/actionResultStore'
 
 export function ActionResultModal() {
   const { result, show, reset } = useActionResultStore()
