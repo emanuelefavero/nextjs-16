@@ -8,8 +8,6 @@ import type { Product, ProductQuantityOperation } from '@/types/products'
 import { useOptimistic, useTransition } from 'react'
 import { ProductQuantityButton } from './product-quantity-button'
 
-// TODO Enable and test revert on error inside handleAdjustQuantity
-
 type Props = {
   product: Product
 }
@@ -23,15 +21,20 @@ export function ProductQuantity({ product }: Props) {
   )
 
   const handleAdjustQuantity = (operation: ProductQuantityOperation) => {
+    // Determine adjustment value
     const adjustment =
       operation === 'increment' ? 1 : product.quantity > 0 ? -1 : 0
 
     startTransition(async () => {
-      setOptimisticQuantity(adjustment)
+      setOptimisticQuantity(adjustment) // Optimistic update
+
+      // Call server action
       const result = await adjustProductQuantityAction(product.id, operation)
+
+      // Revert optimistic update on error
       if ('error' in result) {
         console.error(result.error)
-        // Optionally revert: setOptimisticQuantity(-adjustment)
+        setOptimisticQuantity(-adjustment)
       }
     })
   }
