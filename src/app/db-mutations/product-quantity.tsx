@@ -8,7 +8,6 @@ import type { Product, ProductQuantityOperation } from '@/types/products'
 import { useOptimistic, useTransition } from 'react'
 import { adjustProductQuantityAction } from './actions'
 
-// FIXME: Products get moved to the bottom of the list when their quantity is updated
 // TODO Refactor QuantityButton to a separate file
 // TODO Enable and test revert on error inside handleAdjustQuantity
 

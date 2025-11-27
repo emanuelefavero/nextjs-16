@@ -10,7 +10,14 @@ export async function getProducts(): Promise<Product[]> {
   const client = await pool.connect()
 
   try {
-    const { rows } = await client.query('SELECT * FROM "Product"')
+    // Fetch all products, order by name
+    const query = `
+      SELECT *
+      FROM "Product"
+      ORDER BY name ASC
+    `
+
+    const { rows } = await client.query(query)
     return rows
   } catch (error) {
     console.error(error)
