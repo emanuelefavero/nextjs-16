@@ -3,33 +3,12 @@
 import { MinusIcon } from '@/components/icons/MinusIcon'
 import { PlusIcon } from '@/components/icons/PlusIcon'
 import { SpinnerIcon } from '@/components/icons/SpinnerIcon'
-import { cn } from '@/lib/utils'
 import type { Product, ProductQuantityOperation } from '@/types/products'
 import { useOptimistic, useTransition } from 'react'
 import { adjustProductQuantityAction } from './actions'
+import { ProductQuantityButton } from './product-quantity-button'
 
-// TODO Refactor QuantityButton to a separate file
 // TODO Enable and test revert on error inside handleAdjustQuantity
-
-type QuantityButtonProps = React.ComponentPropsWithRef<'button'> & {}
-
-function QuantityButton({
-  children,
-  className,
-  ...props
-}: QuantityButtonProps) {
-  return (
-    <button
-      className={cn(
-        'border border-danger-foreground/20 bg-danger px-4 py-[.4rem] disabled:opacity-75',
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-}
 
 type Props = {
   product: Product
@@ -59,7 +38,7 @@ export function ProductQuantity({ product }: Props) {
 
   return (
     <div className='flex items-center gap-2'>
-      <QuantityButton
+      <ProductQuantityButton
         onClick={() => handleAdjustQuantity('decrement')}
         disabled={pending}
       >
@@ -68,9 +47,9 @@ export function ProductQuantity({ product }: Props) {
         ) : (
           <MinusIcon strokeClass='stroke-danger-foreground' />
         )}
-      </QuantityButton>
+      </ProductQuantityButton>
       <div className='min-w-[3ch] text-center'>{optimisticQuantity}</div>
-      <QuantityButton
+      <ProductQuantityButton
         onClick={() => handleAdjustQuantity('increment')}
         disabled={pending}
       >
@@ -79,7 +58,7 @@ export function ProductQuantity({ product }: Props) {
         ) : (
           <PlusIcon strokeClass='stroke-danger-foreground' />
         )}
-      </QuantityButton>
+      </ProductQuantityButton>
     </div>
   )
 }
