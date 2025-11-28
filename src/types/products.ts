@@ -7,6 +7,7 @@ export type Product = {
 }
 
 export type NewProduct = Omit<Product, 'id' | 'status'>
+
 export type ProductId = Product['id']
 export type ProductQuantity = Product['quantity']
 export type ProductQuantityOperation = 'increment' | 'decrement'
@@ -15,4 +16,10 @@ export type ProductStatus =
   | 'CHECKED_OUT'
   | 'MAINTENANCE'
   | 'DISCONTINUED'
+export type ProductStatusLabel =
+  | 'In Stock'
+  | 'Checked Out'
+  | 'Maintenance'
+  | 'Discontinued'
+
 export type Products = Product[]
