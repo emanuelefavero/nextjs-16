@@ -1,6 +1,8 @@
 import type { Product } from '@/types/products'
 import { ProductRow } from './product-row'
 
+// TODO Add 'Status' column (use PRODUCT_STATUS_LABELS from utils/products.ts to display labels in ProductRow)
+
 const COLUMNS = ['Product', 'Quantity', 'Category', 'Actions']
 
 type Props = {
