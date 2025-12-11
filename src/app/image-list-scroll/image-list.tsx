@@ -7,8 +7,10 @@ import { useCallback, useEffect, useState } from 'react'
 // TODO find alternative to call loadMore without the timer without getting useEffect warning
 
 const INITIAL_ID = 10
-const MAX_ID = 110
-const BATCH_SIZE = 10
+const MAX_ID = 90
+const BATCH_SIZE = 9
+
+// * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
 export function ImageList() {
   // Start with IDs 10 to 19
@@ -18,7 +20,7 @@ export function ImageList() {
 
   // Use the custom hook to detect when the bottom is reached
   const { ref, isIntersecting } = useIntersectionObserver({
-    threshold: 0.1, // Trigger when 10% of the target is visible
+    threshold: 0.1, // * Trigger when 10% of the target is visible
   })
 
   // Load more images when the bottom is intersecting
