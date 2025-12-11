@@ -4,8 +4,6 @@ import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import Image from 'next/image'
 import { startTransition, useCallback, useEffect, useState } from 'react'
 
-// TODO find alternative to call loadMore without the timer without getting useEffect warning
-
 const INITIAL_ID = 10
 const MAX_ID = 90
 const BATCH_SIZE = 9
