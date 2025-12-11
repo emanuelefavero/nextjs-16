@@ -25,6 +25,9 @@ export default async function Home() {
           <Link href='/image-slider'>Image Slider</Link>
         </li>
         <li>
+          <Link href='/image-list-scroll'>Image List Scroll</Link>
+        </li>
+        <li>
           <Link href='/use-cache'>use cache</Link>
         </li>
         <li>
