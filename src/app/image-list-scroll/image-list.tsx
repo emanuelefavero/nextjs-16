@@ -2,7 +2,7 @@
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
+import { startTransition, useCallback, useEffect, useState } from 'react'
 
 // TODO find alternative to call loadMore without the timer without getting useEffect warning
 
@@ -44,11 +44,7 @@ export function ImageList() {
   // Trigger loadMore when isIntersecting changes to true
   useEffect(() => {
     if (isIntersecting) {
-      const timer = setTimeout(() => {
-        loadMore()
-      }, 0)
-
-      return () => clearTimeout(timer)
+      startTransition(() => loadMore())
     }
   }, [isIntersecting, loadMore])
 
@@ -77,12 +73,13 @@ export function ImageList() {
       {/* Sentinel element - invisible trigger at the bottom */}
       {ids[ids.length - 1] < MAX_ID && (
         <div ref={ref} className='flex h-20 w-full items-center justify-center'>
-          <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900'></div>
+          <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-foreground'></div>
         </div>
       )}
 
+      {/* Only shown when all images are loaded */}
       {ids[ids.length - 1] >= MAX_ID && (
-        <div className='py-4 text-center text-gray-500'>
+        <div className='py-4 text-center text-foreground'>
           You{"'"}ve reached the end of the list.
         </div>
       )}
