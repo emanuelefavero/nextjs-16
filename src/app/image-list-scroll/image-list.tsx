@@ -6,16 +6,19 @@ import { useCallback, useEffect, useState, useTransition } from 'react'
 
 const INITIAL_ID = 10
 const MAX_ID = 90
-const BATCH_SIZE = 9
+
+type Props = {
+  batchSize?: number
+}
 
 // * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
-export function ImageList() {
+export function ImageList({ batchSize = 9 }: Props) {
   const [isPending, startTransition] = useTransition()
 
   // Start with IDs 10 to 18
   const [ids, setIds] = useState<number[]>(
-    Array.from({ length: BATCH_SIZE }, (_, i) => INITIAL_ID + i),
+    Array.from({ length: batchSize }, (_, i) => INITIAL_ID + i),
   )
 
   // Use the custom hook to detect when the bottom is reached
@@ -34,13 +37,13 @@ export function ImageList() {
 
       // Calculate next batch
       const nextIds = Array.from(
-        { length: BATCH_SIZE },
+        { length: batchSize },
         (_, i) => lastId + 1 + i,
       ).filter((id) => id <= MAX_ID)
 
       return [...prevIds, ...nextIds]
     })
-  }, [])
+  }, [batchSize])
 
   // Trigger loadMore when isIntersecting changes to true
   useEffect(() => {
@@ -76,8 +79,8 @@ export function ImageList() {
               className='hover:scale object-cover transition-transform duration-300 ease-in-out hover:scale-105'
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
               // Prioritize first batch
-              priority={index < BATCH_SIZE}
-              loading={index < BATCH_SIZE ? 'eager' : 'lazy'}
+              priority={index < batchSize}
+              loading={index < batchSize ? 'eager' : 'lazy'}
             />
             <div className='absolute right-2 bottom-2 rounded bg-black/50 px-2 py-1 text-xs text-white'>
               ID: {id}
