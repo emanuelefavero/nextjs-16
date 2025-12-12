@@ -67,7 +67,7 @@ export function ImageList() {
         {ids.map((id) => (
           <div
             key={id}
-            className='relative aspect-video w-full animate-fade-in overflow-hidden rounded-lg bg-gray-100'
+            className='relative aspect-video w-full animate-fade-in overflow-hidden rounded-lg bg-primary/20'
           >
             <Image
               src={`https://picsum.photos/id/${id}/800/600`}
