@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import { ImageList } from './image-list'
-import { ImageListSkeleton } from './image-list-skeleton'
+import { ImageList } from './components/image-list'
+import { ImageListSkeleton } from './components/image-list-skeleton'
 
 export default function Page() {
   return (
