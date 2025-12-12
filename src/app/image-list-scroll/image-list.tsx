@@ -13,7 +13,7 @@ const BATCH_SIZE = 9
 export function ImageList() {
   const [isPending, startTransition] = useTransition()
 
-  // Start with IDs 10 to 19
+  // Start with IDs 10 to 18
   const [ids, setIds] = useState<number[]>(
     Array.from({ length: BATCH_SIZE }, (_, i) => INITIAL_ID + i),
   )
@@ -73,7 +73,7 @@ export function ImageList() {
               src={`https://picsum.photos/id/${id}/800/600`}
               alt={`Image ${id}`}
               fill
-              className='object-cover'
+              className='hover:scale object-cover transition-transform duration-300 ease-in-out hover:scale-105'
               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
               // Prioritize first batch
               priority={index < BATCH_SIZE}
