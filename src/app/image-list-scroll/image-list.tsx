@@ -2,7 +2,7 @@
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import Image from 'next/image'
-import { startTransition, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useTransition } from 'react'
 
 const INITIAL_ID = 10
 const MAX_ID = 90
@@ -11,6 +11,8 @@ const BATCH_SIZE = 9
 // * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
 export function ImageList() {
+  const [isPending, startTransition] = useTransition()
+
   // Start with IDs 10 to 19
   const [ids, setIds] = useState<number[]>(
     Array.from({ length: BATCH_SIZE }, (_, i) => INITIAL_ID + i),
@@ -18,7 +20,8 @@ export function ImageList() {
 
   // Use the custom hook to detect when the bottom is reached
   const { ref, isIntersecting } = useIntersectionObserver({
-    threshold: 0.1, // * Trigger when 10% of the target is visible
+    threshold: 0, // * Trigger as soon as the sentinel enters the viewport
+    rootMargin: '100px', // * Start loading before reaching the bottom
   })
 
   // Load more images when the bottom is intersecting
@@ -46,6 +49,18 @@ export function ImageList() {
     }
   }, [isIntersecting, loadMore])
 
+  // Post-load check: If content doesn't fill viewport, load more until it does
+  useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      document.body.scrollHeight <= window.innerHeight &&
+      ids[ids.length - 1] < MAX_ID &&
+      !isPending
+    ) {
+      startTransition(() => loadMore())
+    }
+  }, [ids, isPending, loadMore])
+
   return (
     <div className='flex flex-col gap-8 p-8'>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
@@ -71,7 +86,9 @@ export function ImageList() {
       {/* Sentinel element - invisible trigger at the bottom */}
       {ids[ids.length - 1] < MAX_ID && (
         <div ref={ref} className='flex h-20 w-full items-center justify-center'>
-          <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-foreground'></div>
+          {isPending && (
+            <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-foreground'></div>
+          )}
         </div>
       )}
 
