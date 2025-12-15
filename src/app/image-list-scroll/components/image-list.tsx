@@ -1,8 +1,8 @@
 'use client'
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
-import Image from 'next/image'
 import { useCallback, useEffect, useState, useTransition } from 'react'
+import { ImageItem } from './image-item'
 
 const INITIAL_ID = 10
 const MAX_ID = 90
@@ -68,24 +68,7 @@ export function ImageList({ batchSize = 9 }: Props) {
     <div className='flex flex-col gap-8 p-8'>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {ids.map((id, index) => (
-          <div
-            key={id}
-            className='relative aspect-video w-full animate-fade-in overflow-hidden rounded-lg bg-primary/20'
-          >
-            <Image
-              src={`https://picsum.photos/id/${id}/800/600`}
-              alt={`Image ${id}`}
-              fill
-              className='hover:scale object-cover transition-transform duration-300 ease-in-out hover:scale-105'
-              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-              // Prioritize first batch
-              priority={index < batchSize}
-              loading={index < batchSize ? 'eager' : 'lazy'}
-            />
-            <div className='absolute right-2 bottom-2 rounded bg-black/50 px-2 py-1 text-xs text-white'>
-              ID: {id}
-            </div>
-          </div>
+          <ImageItem key={id} id={id} index={index} batchSize={batchSize} />
         ))}
       </div>
 
