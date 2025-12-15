@@ -16,6 +16,7 @@ export type ImageListState = {
   // Actions
   loadMore: () => void
   reset: () => void
+  getLoadCompleted: () => boolean
 }
 
 export const useImageListStore = create<ImageListState>((set, get) => ({
@@ -44,5 +45,11 @@ export const useImageListStore = create<ImageListState>((set, get) => ({
 
   reset: () => {
     set({ ids: initialIds })
+  },
+
+  getLoadCompleted: () => {
+    const { ids } = get()
+    const lastId = ids[ids.length - 1]
+    return lastId >= MAX_ID
   },
 }))

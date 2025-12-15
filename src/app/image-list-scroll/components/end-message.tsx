@@ -1,12 +1,15 @@
+import { useImageListStore } from '@/app/image-list-scroll/store/useImageListStore'
 import { cn } from '@/lib/utils'
 
 type Props = React.ComponentProps<'div'> & {
-  isVisible: boolean
   message: string
 }
 
-export function EndMessage({ isVisible, message, className, ...props }: Props) {
-  if (!isVisible) return null
+export function EndMessage({ message, className, ...props }: Props) {
+  const { getLoadCompleted } = useImageListStore()
+  const loadCompleted = getLoadCompleted()
+
+  if (!loadCompleted) return null
 
   return (
     <div

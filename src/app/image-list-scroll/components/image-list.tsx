@@ -1,6 +1,5 @@
 'use client'
 
-import { IMAGE_LIST_CONFIG } from '@/app/image-list-scroll/config'
 import { useImageListStore } from '@/app/image-list-scroll/store/useImageListStore'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import { useEffect, useTransition } from 'react'
@@ -8,14 +7,12 @@ import { EndMessage } from './end-message'
 import { ImageItem } from './image-item'
 import { Sentinel } from './sentinel'
 
-const { MAX_ID } = IMAGE_LIST_CONFIG
-
 // * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
 export function ImageList() {
-  const { ids, loadMore } = useImageListStore()
+  const { ids, loadMore, getLoadCompleted } = useImageListStore()
   const [isPending, startTransition] = useTransition()
-  const canLoadMore = ids[ids.length - 1] < MAX_ID
+  const loadCompleted = getLoadCompleted()
 
   // Use the custom hook to detect when the bottom is reached
   const { ref, isIntersecting } = useIntersectionObserver({
@@ -33,12 +30,12 @@ export function ImageList() {
     if (
       typeof window !== 'undefined' &&
       document.body.scrollHeight <= window.innerHeight &&
-      canLoadMore &&
+      !loadCompleted &&
       !isPending
     ) {
       startTransition(() => loadMore())
     }
-  }, [canLoadMore, isPending, loadMore])
+  }, [loadCompleted, isPending, loadMore])
 
   return (
     <div className='flex flex-col gap-8 p-8'>
@@ -50,13 +47,10 @@ export function ImageList() {
       </div>
 
       {/* Sentinel element (hidden element that triggers loading more) + Loading Indicator */}
-      <Sentinel ref={ref} isVisible={canLoadMore} isPending={isPending} />
+      <Sentinel ref={ref} isPending={isPending} />
 
       {/* Only shown when all images are loaded */}
-      <EndMessage
-        isVisible={!canLoadMore}
-        message="You've reached the end of the list."
-      />
+      <EndMessage message="You've reached the end of the list." />
     </div>
   )
 }
