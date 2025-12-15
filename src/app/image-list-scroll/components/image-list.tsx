@@ -24,10 +24,12 @@ export function ImageList({ batchSize = 9 }: Props) {
     Array.from({ length: batchSize }, (_, i) => INITIAL_ID + i),
   )
 
+  const canLoadMore = ids[ids.length - 1] < MAX_ID
+
   // Use the custom hook to detect when the bottom is reached
   const { ref, isIntersecting } = useIntersectionObserver({
-    threshold: 0, // * Trigger as soon as the sentinel enters the viewport
-    rootMargin: '100px', // * Start loading before reaching the bottom
+    threshold: 0, // ? Trigger as soon as the sentinel enters the viewport
+    rootMargin: '100px', // ? Start loading before reaching the bottom
   })
 
   // Load more images when the bottom is intersecting
@@ -50,9 +52,7 @@ export function ImageList({ batchSize = 9 }: Props) {
 
   // Trigger loadMore when isIntersecting changes to true
   useEffect(() => {
-    if (isIntersecting) {
-      startTransition(() => loadMore())
-    }
+    if (isIntersecting) startTransition(() => loadMore())
   }, [isIntersecting, loadMore])
 
   // Post-load check: If content doesn't fill viewport, load more until it does
@@ -60,12 +60,12 @@ export function ImageList({ batchSize = 9 }: Props) {
     if (
       typeof window !== 'undefined' &&
       document.body.scrollHeight <= window.innerHeight &&
-      ids[ids.length - 1] < MAX_ID &&
+      canLoadMore &&
       !isPending
     ) {
       startTransition(() => loadMore())
     }
-  }, [ids, isPending, loadMore])
+  }, [canLoadMore, isPending, loadMore])
 
   return (
     <div className='flex flex-col gap-8 p-8'>
@@ -77,15 +77,11 @@ export function ImageList({ batchSize = 9 }: Props) {
       </div>
 
       {/* Sentinel element (hidden element that triggers loading more) + Loading Indicator */}
-      <Sentinel
-        ref={ref}
-        isVisible={ids[ids.length - 1] < MAX_ID}
-        isPending={isPending}
-      />
+      <Sentinel ref={ref} isVisible={canLoadMore} isPending={isPending} />
 
       {/* Only shown when all images are loaded */}
       <EndMessage
-        isVisible={ids[ids.length - 1] >= MAX_ID}
+        isVisible={!canLoadMore}
         message="You've reached the end of the list."
       />
     </div>
