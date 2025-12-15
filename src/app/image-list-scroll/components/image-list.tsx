@@ -3,7 +3,9 @@
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 import { ImageItem } from './image-item'
+import { Sentinel } from './sentinel'
 
+// Constants defining the range of image IDs
 const INITIAL_ID = 10
 const MAX_ID = 90
 
@@ -66,20 +68,19 @@ export function ImageList({ batchSize = 9 }: Props) {
 
   return (
     <div className='flex flex-col gap-8 p-8'>
+      {/* Image grid */}
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {ids.map((id, index) => (
           <ImageItem key={id} id={id} index={index} batchSize={batchSize} />
         ))}
       </div>
 
-      {/* Sentinel element - invisible trigger at the bottom */}
-      {ids[ids.length - 1] < MAX_ID && (
-        <div ref={ref} className='flex h-20 w-full items-center justify-center'>
-          {isPending && (
-            <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-foreground'></div>
-          )}
-        </div>
-      )}
+      {/* Sentinel element (hidden element that triggers loading more) + Loading Indicator */}
+      <Sentinel
+        ref={ref}
+        isVisible={ids[ids.length - 1] < MAX_ID}
+        isPending={isPending}
+      />
 
       {/* Only shown when all images are loaded */}
       {ids[ids.length - 1] >= MAX_ID && (
