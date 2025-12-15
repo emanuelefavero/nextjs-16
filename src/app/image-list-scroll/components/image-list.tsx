@@ -2,6 +2,7 @@
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import { useCallback, useEffect, useState, useTransition } from 'react'
+import { EndMessage } from './end-message'
 import { ImageItem } from './image-item'
 import { Sentinel } from './sentinel'
 
@@ -83,11 +84,10 @@ export function ImageList({ batchSize = 9 }: Props) {
       />
 
       {/* Only shown when all images are loaded */}
-      {ids[ids.length - 1] >= MAX_ID && (
-        <div className='py-4 text-center text-foreground'>
-          You{"'"}ve reached the end of the list.
-        </div>
-      )}
+      <EndMessage
+        isVisible={ids[ids.length - 1] >= MAX_ID}
+        message="You've reached the end of the list."
+      />
     </div>
   )
 }
