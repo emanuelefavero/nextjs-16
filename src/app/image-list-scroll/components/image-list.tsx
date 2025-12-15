@@ -1,14 +1,13 @@
 'use client'
 
+import { IMAGE_LIST_CONFIG } from '@/app/image-list-scroll/config'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 import { EndMessage } from './end-message'
 import { ImageItem } from './image-item'
 import { Sentinel } from './sentinel'
 
-// Constants defining the range of image IDs
-const INITIAL_ID = 10
-const MAX_ID = 90
+const { INITIAL_ID, MAX_ID, BATCH_SIZE } = IMAGE_LIST_CONFIG
 
 type Props = {
   batchSize?: number
@@ -16,7 +15,7 @@ type Props = {
 
 // * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
-export function ImageList({ batchSize = 9 }: Props) {
+export function ImageList({ batchSize = BATCH_SIZE }: Props) {
   const [isPending, startTransition] = useTransition()
 
   // Start with IDs 10 to 18

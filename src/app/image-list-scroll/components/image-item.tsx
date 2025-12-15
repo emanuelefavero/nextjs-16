@@ -1,12 +1,15 @@
+import { IMAGE_LIST_CONFIG } from '@/app/image-list-scroll/config'
 import Image from 'next/image'
+
+const { BATCH_SIZE } = IMAGE_LIST_CONFIG
 
 type Props = {
   id: number
   index: number
-  batchSize: number
+  batchSize?: number
 }
 
-export function ImageItem({ id, index, batchSize }: Props) {
+export function ImageItem({ id, index, batchSize = BATCH_SIZE }: Props) {
   return (
     <div className='relative aspect-video w-full animate-fade-in overflow-hidden rounded-lg bg-primary/20'>
       <Image
