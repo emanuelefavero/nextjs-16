@@ -1,28 +1,20 @@
 'use client'
 
 import { IMAGE_LIST_CONFIG } from '@/app/image-list-scroll/config'
+import { useImageListStore } from '@/app/image-list-scroll/store/useImageListStore'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
-import { useCallback, useEffect, useState, useTransition } from 'react'
+import { useEffect, useTransition } from 'react'
 import { EndMessage } from './end-message'
 import { ImageItem } from './image-item'
 import { Sentinel } from './sentinel'
 
-const { INITIAL_ID, MAX_ID, BATCH_SIZE } = IMAGE_LIST_CONFIG
-
-type Props = {
-  batchSize?: number
-}
+const { MAX_ID } = IMAGE_LIST_CONFIG
 
 // * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
-export function ImageList({ batchSize = BATCH_SIZE }: Props) {
+export function ImageList() {
+  const { ids, loadMore } = useImageListStore()
   const [isPending, startTransition] = useTransition()
-
-  // Start with IDs 10 to 18
-  const [ids, setIds] = useState<number[]>(
-    Array.from({ length: batchSize }, (_, i) => INITIAL_ID + i),
-  )
-
   const canLoadMore = ids[ids.length - 1] < MAX_ID
 
   // Use the custom hook to detect when the bottom is reached
@@ -30,24 +22,6 @@ export function ImageList({ batchSize = BATCH_SIZE }: Props) {
     threshold: 0, // ? Trigger as soon as the sentinel enters the viewport
     rootMargin: '100px', // ? Start loading before reaching the bottom
   })
-
-  // Load more images when the bottom is intersecting
-  const loadMore = useCallback(() => {
-    setIds((prevIds) => {
-      const lastId = prevIds[prevIds.length - 1]
-
-      // Stop if we've reached the limit
-      if (lastId >= MAX_ID) return prevIds
-
-      // Calculate next batch
-      const nextIds = Array.from(
-        { length: batchSize },
-        (_, i) => lastId + 1 + i,
-      ).filter((id) => id <= MAX_ID)
-
-      return [...prevIds, ...nextIds]
-    })
-  }, [batchSize])
 
   // Trigger loadMore when isIntersecting changes to true
   useEffect(() => {
@@ -71,7 +45,7 @@ export function ImageList({ batchSize = BATCH_SIZE }: Props) {
       {/* Image grid */}
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {ids.map((id, index) => (
-          <ImageItem key={id} id={id} index={index} batchSize={batchSize} />
+          <ImageItem key={id} id={id} index={index} />
         ))}
       </div>
 
