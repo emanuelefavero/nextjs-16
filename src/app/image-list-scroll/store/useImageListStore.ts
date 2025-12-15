@@ -12,15 +12,16 @@ const initialIds: ImageId[] = Array.from(
 export type ImageListState = {
   // State
   ids: ImageId[]
+  isFullyLoaded: boolean
 
   // Actions
   loadMore: () => void
   reset: () => void
-  getIsFullyLoaded: () => boolean
 }
 
-export const useImageListStore = create<ImageListState>((set, get) => ({
+export const useImageListStore = create<ImageListState>((set) => ({
   ids: initialIds,
+  isFullyLoaded: false,
 
   loadMore: () => {
     set(({ ids }) => {
@@ -37,19 +38,17 @@ export const useImageListStore = create<ImageListState>((set, get) => ({
         (_, i) => lastId + 1 + i,
       ).filter((id) => id <= MAX_ID) // ? Ensure we don't exceed MAX_ID
 
+      const newIds = [...ids, ...nextIds]
+      const newLastId = newIds[newIds.length - 1]
+
       return {
-        ids: [...ids, ...nextIds],
+        ids: newIds,
+        isFullyLoaded: newLastId >= MAX_ID,
       }
     })
   },
 
   reset: () => {
-    set({ ids: initialIds })
-  },
-
-  getIsFullyLoaded: () => {
-    const { ids } = get()
-    const lastId = ids[ids.length - 1]
-    return lastId >= MAX_ID
+    set({ ids: initialIds, isFullyLoaded: false })
   },
 }))

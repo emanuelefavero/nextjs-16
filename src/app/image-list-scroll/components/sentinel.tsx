@@ -7,8 +7,7 @@ type Props = React.ComponentProps<'div'> & {
 }
 
 export function Sentinel({ isPending, className, ...props }: Props) {
-  const { getIsFullyLoaded } = useImageListStore()
-  const isFullyLoaded = getIsFullyLoaded()
+  const { isFullyLoaded } = useImageListStore()
   if (isFullyLoaded) return null
 
   return (
