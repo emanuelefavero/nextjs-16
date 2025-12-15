@@ -10,9 +10,9 @@ import { Sentinel } from './sentinel'
 // * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
 export function ImageList() {
-  const { ids, loadMore, getLoadCompleted } = useImageListStore()
+  const { ids, loadMore, getIsFullyLoaded } = useImageListStore()
   const [isPending, startTransition] = useTransition()
-  const loadCompleted = getLoadCompleted()
+  const isFullyLoaded = getIsFullyLoaded()
 
   // Use the custom hook to detect when the bottom is reached
   const { ref, isIntersecting } = useIntersectionObserver({
@@ -30,12 +30,12 @@ export function ImageList() {
     if (
       typeof window !== 'undefined' &&
       document.body.scrollHeight <= window.innerHeight &&
-      !loadCompleted &&
+      !isFullyLoaded &&
       !isPending
     ) {
       startTransition(() => loadMore())
     }
-  }, [loadCompleted, isPending, loadMore])
+  }, [isFullyLoaded, isPending, loadMore])
 
   return (
     <div className='flex flex-col gap-8 p-8'>

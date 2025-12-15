@@ -6,10 +6,10 @@ type Props = React.ComponentProps<'div'> & {
 }
 
 export function EndMessage({ message, className, ...props }: Props) {
-  const { getLoadCompleted } = useImageListStore()
-  const loadCompleted = getLoadCompleted()
+  const { getIsFullyLoaded } = useImageListStore()
+  const isFullyLoaded = getIsFullyLoaded()
 
-  if (!loadCompleted) return null
+  if (!isFullyLoaded) return null
 
   return (
     <div
