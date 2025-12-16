@@ -7,6 +7,7 @@ export default function Page() {
     <>
       <h1>Image List Scroll</h1>
 
+      {/* Suspense boundary with skeleton for loading state */}
       <Suspense fallback={<ImageListSkeleton />}>
         <ImageList />
       </Suspense>

@@ -6,6 +6,10 @@ type Props = React.ComponentProps<'div'> & {
   message: string
 }
 
+/**
+ * EndMessage component that displays a message when all images are loaded.
+ * Memoized to prevent unnecessary re-renders.
+ */
 export const EndMessage = memo(function EndMessage({
   message,
   className,
@@ -13,6 +17,7 @@ export const EndMessage = memo(function EndMessage({
 }: Props) {
   const isFullyLoaded = useImageListStore((state) => state.isFullyLoaded)
 
+  // Only render when all images have been loaded
   if (!isFullyLoaded) return null
 
   return (

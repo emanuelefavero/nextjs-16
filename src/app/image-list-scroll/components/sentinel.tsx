@@ -7,12 +7,18 @@ type Props = React.ComponentProps<'div'> & {
   isPending: boolean
 }
 
+/**
+ * Sentinel component used as an intersection observer target for infinite scroll.
+ * Displays a loading indicator when fetching more content. Memoized for performance.
+ */
 export const Sentinel = memo(function Sentinel({
   isPending,
   className,
   ...props
 }: Props) {
   const isFullyLoaded = useImageListStore((state) => state.isFullyLoaded)
+
+  // Don't render sentinel when all content is loaded
   if (isFullyLoaded) return null
 
   return (

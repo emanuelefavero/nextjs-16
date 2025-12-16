@@ -11,23 +11,27 @@ type Options = {
   isFullyLoaded: boolean
 }
 
+/**
+ * Custom hook for implementing infinite scroll functionality.
+ * Uses intersection observer to detect when to load more content.
+ */
 export function useInfiniteScroll({ loadMore, isFullyLoaded }: Options) {
   const [isPending, startTransition] = useTransition()
 
-  // Detect when the sentinel enters the viewport
+  // Set up intersection observer for scroll detection
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: THRESHOLD,
     rootMargin: ROOT_MARGIN,
   })
 
-  // Trigger loadMore when isIntersecting changes to true
+  // Load more content when sentinel enters viewport
   useEffect(() => {
     if (isIntersecting && !isFullyLoaded) {
       startTransition(() => loadMore())
     }
   }, [isIntersecting, isFullyLoaded, loadMore])
 
-  // Post-load check: If content doesn't fill viewport, load more until it does
+  // Ensure content fills viewport by loading more if needed after initial load
   useEffect(() => {
     if (
       typeof window !== 'undefined' &&

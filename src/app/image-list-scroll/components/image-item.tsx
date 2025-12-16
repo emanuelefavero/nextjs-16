@@ -9,6 +9,10 @@ type Props = {
   index: number
 }
 
+/**
+ * ImageItem component that renders an individual image with hover effects.
+ * Memoized to prevent unnecessary re-renders. Prioritizes loading for initial batch.
+ */
 export const ImageItem = memo(function ImageItem({ id, index }: Props) {
   return (
     <div className='relative aspect-video w-full animate-fade-in overflow-hidden rounded-lg bg-primary/20'>
@@ -18,8 +22,8 @@ export const ImageItem = memo(function ImageItem({ id, index }: Props) {
         fill
         className='object-cover transition-transform duration-300 ease-in-out hover:scale-105'
         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-        priority={index < BATCH_SIZE}
-        loading={index < BATCH_SIZE ? 'eager' : 'lazy'}
+        priority={index < BATCH_SIZE} // Prioritize loading for first batch
+        loading={index < BATCH_SIZE ? 'eager' : 'lazy'} // Eager load initial images
       />
       <div className='absolute right-2 bottom-2 rounded bg-black/50 px-2 py-1 text-xs text-white'>
         ID: {id}

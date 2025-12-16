@@ -1,22 +1,32 @@
 'use client'
 
+import { useMemo } from 'react'
+
+// Custom hooks and store
 import { useInfiniteScroll } from '@/app/image-list-scroll/hooks/useInfiniteScroll'
 import { useImageListStore } from '@/app/image-list-scroll/store/useImageListStore'
-import { useMemo } from 'react'
+
+// Component imports
 import { EndMessage } from './end-message'
 import { ImageItem } from './image-item'
 import { Sentinel } from './sentinel'
 
-// * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
-
+/**
+ * ImageList component that renders a responsive grid of images with infinite scroll functionality.
+ * Automatically fetches more content as the user scrolls near the bottom.
+ *
+ * @example
+ * <ImageList />
+ */
 export function ImageList() {
-  // TIP: No destructuring to avoid unnecessary re-renders
+  // Select specific state properties to avoid unnecessary re-renders
   const ids = useImageListStore((state) => state.ids)
   const loadMore = useImageListStore((state) => state.loadMore)
   const isFullyLoaded = useImageListStore((state) => state.isFullyLoaded)
 
   const { ref, isPending } = useInfiniteScroll({ loadMore, isFullyLoaded })
 
+  // Memoize image items to prevent re-rendering on every state change
   const imageItems = useMemo(
     () => ids.map((id, index) => <ImageItem key={id} id={id} index={index} />),
     [ids],
@@ -24,15 +34,15 @@ export function ImageList() {
 
   return (
     <div className='flex flex-col gap-8 p-8'>
-      {/* Image grid */}
+      {/* Main image grid with responsive columns */}
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {imageItems}
       </div>
 
-      {/* Sentinel element (hidden element that triggers loading more) + Loading Indicator */}
+      {/* Intersection observer sentinel triggers loading when scrolled into view */}
       <Sentinel ref={ref} isPending={isPending} />
 
-      {/* Only shown when all images are loaded */}
+      {/* End message displays only after all images are loaded */}
       <EndMessage message="You've reached the end of the list." />
     </div>
   )
