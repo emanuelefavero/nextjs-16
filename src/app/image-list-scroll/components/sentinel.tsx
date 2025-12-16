@@ -1,12 +1,17 @@
 import { useImageListStore } from '@/app/image-list-scroll/store/useImageListStore'
 import { LoadingIndicator } from '@/components/shared/loading-indicator'
 import { cn } from '@/lib/utils'
+import { memo } from 'react'
 
 type Props = React.ComponentProps<'div'> & {
   isPending: boolean
 }
 
-export function Sentinel({ isPending, className, ...props }: Props) {
+export const Sentinel = memo(function Sentinel({
+  isPending,
+  className,
+  ...props
+}: Props) {
   const isFullyLoaded = useImageListStore((state) => state.isFullyLoaded)
   if (isFullyLoaded) return null
 
@@ -18,4 +23,4 @@ export function Sentinel({ isPending, className, ...props }: Props) {
       <LoadingIndicator isLoading={isPending} />
     </div>
   )
-}
+})

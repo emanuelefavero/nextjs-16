@@ -1,11 +1,16 @@
 import { useImageListStore } from '@/app/image-list-scroll/store/useImageListStore'
 import { cn } from '@/lib/utils'
+import { memo } from 'react'
 
 type Props = React.ComponentProps<'div'> & {
   message: string
 }
 
-export function EndMessage({ message, className, ...props }: Props) {
+export const EndMessage = memo(function EndMessage({
+  message,
+  className,
+  ...props
+}: Props) {
   const isFullyLoaded = useImageListStore((state) => state.isFullyLoaded)
 
   if (!isFullyLoaded) return null
@@ -18,4 +23,4 @@ export function EndMessage({ message, className, ...props }: Props) {
       {message}
     </div>
   )
-}
+})

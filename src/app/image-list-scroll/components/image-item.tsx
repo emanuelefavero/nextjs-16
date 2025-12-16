@@ -1,5 +1,6 @@
 import { IMAGE_LIST_CONFIG } from '@/app/image-list-scroll/config'
 import Image from 'next/image'
+import { memo } from 'react'
 
 const { BATCH_SIZE } = IMAGE_LIST_CONFIG
 
@@ -8,7 +9,7 @@ type Props = {
   index: number
 }
 
-export function ImageItem({ id, index }: Props) {
+export const ImageItem = memo(function ImageItem({ id, index }: Props) {
   return (
     <div className='relative aspect-video w-full animate-fade-in overflow-hidden rounded-lg bg-primary/20'>
       <Image
@@ -25,4 +26,4 @@ export function ImageItem({ id, index }: Props) {
       </div>
     </div>
   )
-}
+})

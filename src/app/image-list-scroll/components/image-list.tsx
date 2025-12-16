@@ -2,6 +2,7 @@
 
 import { useInfiniteScroll } from '@/app/image-list-scroll/hooks/useInfiniteScroll'
 import { useImageListStore } from '@/app/image-list-scroll/store/useImageListStore'
+import { useMemo } from 'react'
 import { EndMessage } from './end-message'
 import { ImageItem } from './image-item'
 import { Sentinel } from './sentinel'
@@ -16,13 +17,16 @@ export function ImageList() {
 
   const { ref, isPending } = useInfiniteScroll({ loadMore, isFullyLoaded })
 
+  const imageItems = useMemo(
+    () => ids.map((id, index) => <ImageItem key={id} id={id} index={index} />),
+    [ids],
+  )
+
   return (
     <div className='flex flex-col gap-8 p-8'>
       {/* Image grid */}
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-        {ids.map((id, index) => (
-          <ImageItem key={id} id={id} index={index} />
-        ))}
+        {imageItems}
       </div>
 
       {/* Sentinel element (hidden element that triggers loading more) + Loading Indicator */}
