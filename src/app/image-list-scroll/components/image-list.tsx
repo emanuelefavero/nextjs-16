@@ -9,7 +9,11 @@ import { Sentinel } from './sentinel'
 // * Component that displays a list of images with infinite scroll, loading more images as the user scrolls down.
 
 export function ImageList() {
-  const { ids, loadMore, isFullyLoaded } = useImageListStore()
+  // TIP: No destructuring to avoid unnecessary re-renders
+  const ids = useImageListStore((state) => state.ids)
+  const loadMore = useImageListStore((state) => state.loadMore)
+  const isFullyLoaded = useImageListStore((state) => state.isFullyLoaded)
+
   const { ref, isPending } = useInfiniteScroll({ loadMore, isFullyLoaded })
 
   return (
