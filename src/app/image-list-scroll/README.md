@@ -2,6 +2,10 @@
 
 This example demonstrates an image list with infinite scroll using Next.js 16, React, Intersection Observer API, and Zustand for state management. Images load automatically as the user scrolls.
 
+## Live Demo
+
+- [https://nextjs-16-topaz.vercel.app/image-list-scroll](https://nextjs-16-topaz.vercel.app/image-list-scroll)
+
 ## Features
 
 - Infinite scroll with sentinel-based loading via `Intersection Observer` API

@@ -4,6 +4,10 @@ This repository is a playground for Next.js 16. Feel free to use it to test new 
 
 > Note: This repository is not meant to be used in production.
 
+## Live Demo
+
+- [https://nextjs-16-topaz.vercel.app/](https://nextjs-16-topaz.vercel.app/)
+
 ## How to use
 
 1. Clone the repository
