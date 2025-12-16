@@ -14,9 +14,6 @@ import { Sentinel } from './sentinel'
 /**
  * ImageList component that renders a responsive grid of images with infinite scroll functionality.
  * Automatically fetches more content as the user scrolls near the bottom.
- *
- * @example
- * <ImageList />
  */
 export function ImageList() {
   // Select specific state properties to avoid unnecessary re-renders
