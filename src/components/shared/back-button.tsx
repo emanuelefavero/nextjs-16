@@ -4,9 +4,9 @@ import { cn } from '@/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useEffectEvent, useState } from 'react'
 
-type Props = Omit<React.ComponentProps<'button'>, 'onClick' | 'disabled'>
+type Props = Omit<React.ComponentProps<'button'>, 'onClick'>
 
-export function BackButton({ children, className, ...props }: Props) {
+export function BackButton({ children, className, disabled, ...props }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const [canGoBack, setCanGoBack] = useState(false)
@@ -20,7 +20,7 @@ export function BackButton({ children, className, ...props }: Props) {
     checkHistoryLength()
   }, [pathname])
 
-  const isVisible = pathname !== '/'
+  const isVisible = pathname !== '/' && canGoBack
 
   return (
     <button
@@ -30,7 +30,7 @@ export function BackButton({ children, className, ...props }: Props) {
         className,
       )}
       onClick={() => router.back()}
-      disabled={!canGoBack}
+      disabled={disabled}
       aria-label={typeof children === 'string' ? children : 'Go back'}
       {...props}
     >
