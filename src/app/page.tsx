@@ -1,9 +1,10 @@
+import { APP_TITLE } from '@/config/metadata'
 import Link from 'next/link'
 
 export default async function Home() {
   return (
     <>
-      <h1>Next.js 16</h1>
+      <h1>{APP_TITLE}</h1>
 
       <ul className='flex flex-col gap-2'>
         <li>
