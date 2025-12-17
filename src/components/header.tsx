@@ -1,10 +1,10 @@
 'use client'
 
+import { BackButton } from '@/components/shared/back-button'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export function Header() {
-  const router = useRouter()
   const pathname = usePathname()
 
   return (
@@ -12,10 +12,7 @@ export function Header() {
       {pathname !== '/' ? (
         <>
           <Link href='/'>Home</Link>
-
-          <button type='button' onClick={() => router.back()}>
-            Back
-          </button>
+          <BackButton>Back</BackButton>
         </>
       ) : (
         <div className='text-3xl font-bold'>Home</div>
