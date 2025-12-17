@@ -20,6 +20,8 @@ export function BackButton({ children, className, ...props }: Props) {
     checkHistoryLength()
   }, [pathname])
 
+  if (pathname === '/') return null
+
   return (
     <button
       type='button'
