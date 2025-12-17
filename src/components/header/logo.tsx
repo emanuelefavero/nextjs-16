@@ -19,7 +19,7 @@ export function Logo({ className, text = 'Home', icon }: Props) {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  const baseClasses = 'text-3xl font-bold transition-colors duration-200'
+  const baseClasses = 'font-bold transition-colors duration-200'
   const variant = isHome ? logoVariants.home : logoVariants.link
   const mergedClasses = cn(baseClasses, variant, className)
 

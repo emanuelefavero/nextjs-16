@@ -20,12 +20,15 @@ export function BackButton({ children, className, ...props }: Props) {
     checkHistoryLength()
   }, [pathname])
 
-  if (pathname === '/') return null
+  const isVisible = pathname !== '/'
 
   return (
     <button
       type='button'
-      className={cn('', className)}
+      className={cn(
+        isVisible ? '' : 'pointer-events-none invisible',
+        className,
+      )}
       onClick={() => router.back()}
       disabled={!canGoBack}
       aria-label={typeof children === 'string' ? children : 'Go back'}
