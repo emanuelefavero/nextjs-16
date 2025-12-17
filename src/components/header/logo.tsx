@@ -4,20 +4,24 @@ import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+const logoVariants = {
+  home: 'cursor-default',
+  link: '',
+} as const
+
 type Props = {
   className?: string
-  homeClassName?: string
   text?: string
   icon?: React.ReactNode
 }
 
-export function Logo({ className, homeClassName, text = 'Home', icon }: Props) {
+export function Logo({ className, text = 'Home', icon }: Props) {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
   const baseClasses = 'text-3xl font-bold transition-colors duration-200'
-  const linkClasses = cn(baseClasses, className)
-  const homeClasses = cn(baseClasses, 'cursor-default', homeClassName)
+  const variant = isHome ? logoVariants.home : logoVariants.link
+  const mergedClasses = cn(baseClasses, variant, className)
 
   const content = (
     <>
@@ -27,11 +31,11 @@ export function Logo({ className, homeClassName, text = 'Home', icon }: Props) {
   )
 
   if (isHome) {
-    return <div className={homeClasses}>{content}</div>
+    return <div className={mergedClasses}>{content}</div>
   }
 
   return (
-    <Link href='/' className={linkClasses}>
+    <Link href='/' className={mergedClasses}>
       {content}
     </Link>
   )
