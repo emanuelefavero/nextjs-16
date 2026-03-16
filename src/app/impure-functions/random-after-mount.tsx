@@ -7,7 +7,8 @@ export function RandomAfterMount() {
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
-      setRandomNumber(Math.random())
+      // Generate a random number between 1 and 100 after the component mounts
+      setRandomNumber(Math.floor(Math.random() * 100) + 1)
     }, 0)
 
     return () => {
@@ -16,17 +17,10 @@ export function RandomAfterMount() {
   }, [])
 
   return (
-    <div className='rounded-xl border border-foreground/15 bg-background p-4'>
-      <p className='text-sm text-foreground/70'>
-        Initial render stays deterministic, then the browser generates the
-        random value after hydration.
-      </p>
-
-      <p className='mt-3 font-mono text-lg'>
-        {randomNumber === null
-          ? 'Generating random number on the client...'
-          : randomNumber.toFixed(6)}
-      </p>
-    </div>
+    <p className='font-mono text-2xl text-primary'>
+      {randomNumber === null
+        ? 'Generating random number on the client...'
+        : randomNumber}
+    </p>
   )
 }
