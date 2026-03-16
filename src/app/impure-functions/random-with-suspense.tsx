@@ -1,39 +1,16 @@
-'use client'
+import { cacheLife, cacheTag } from 'next/cache'
 
-import { use } from 'react'
+export async function RandomWithSuspense() {
+  'use cache'
+  cacheTag('random-with-suspense')
+  cacheLife({ expire: 0 })
 
-const browserReadyPromise =
-  typeof window === 'undefined'
-    ? new Promise<void>(() => {})
-    : new Promise<void>((resolve) => {
-        window.setTimeout(resolve, 0)
-      })
-
-export function RandomWithSuspense() {
-  use(browserReadyPromise)
-
-  // eslint-disable-next-line react-hooks/purity -- This route intentionally demonstrates Next.js's Suspense escape hatch for render-time randomness.
-  const hue = Math.floor(Math.random() * 360)
-  const chipStyle = {
-    backgroundColor: `hsl(${hue} 80% 92%)`,
-    borderColor: `hsl(${hue} 75% 45%)`,
-    color: `hsl(${hue} 70% 25%)`,
-  }
+  // eslint-disable-next-line react-hooks/purity -- This example intentionally demonstrates render-time randomness isolated behind Suspense.
+  const randomNumber = Math.floor(Math.random() * 100) + 1
 
   return (
-    <div className='rounded-xl border border-foreground/15 bg-background p-4'>
-      <p className='text-sm text-foreground/70'>
-        This component suspends until the browser is ready, then calls{' '}
-        <code>Math.random()</code> during render. That lets Suspense hydrate the
-        fallback first and reveal the random UI on the client.
-      </p>
-
-      <div
-        className='mt-3 inline-flex rounded-full border px-3 py-1 font-mono text-sm'
-        style={chipStyle}
-      >
-        Render-time hue: {hue}
-      </div>
-    </div>
+    <p className='font-mono text-2xl text-primary'>
+      Random number: {randomNumber}
+    </p>
   )
 }

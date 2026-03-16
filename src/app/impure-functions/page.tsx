@@ -30,9 +30,8 @@ export default function Page() {
       <section>
         <h2>Example 2 - Wrap render-time randomness in Suspense</h2>
         <p>
-          Use this only for the advanced case where a client component must call{' '}
-          <code>Math.random()</code> during render. Next.js prerenders the
-          fallback and lets the random UI resolve on the client.
+          Use this when you need to generate the random value on the server with
+          cache components
         </p>
 
         <Suspense fallback={<>Loading...</>}>
