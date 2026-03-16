@@ -40,6 +40,9 @@ export default async function Home() {
         <li>
           <Link href='/connection'>Connection</Link>
         </li>
+        <li>
+          <Link href='/impure-functions'>Impure Functions</Link>
+        </li>
       </ul>
     </>
   )
